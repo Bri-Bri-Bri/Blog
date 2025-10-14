@@ -29,6 +29,7 @@
           <nav>
             <a href="{{ site.baseurl }}/">Blog</a>
             <a href="{{ site.baseurl }}/about">About</a>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"></button>
           </nav>
         </header>
       </div>
@@ -45,6 +46,24 @@
         </footer>
       </div>
     </div>
+
+    <script>
+      // Theme toggle functionality
+      const themeToggle = document.getElementById('theme-toggle');
+      const body = document.body;
+      
+      // Check for saved theme preference or default to light mode
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      body.setAttribute('data-theme', currentTheme);
+      
+      themeToggle.addEventListener('click', () => {
+        const theme = body.getAttribute('data-theme');
+        const newTheme = theme === 'dark' ? 'light' : 'dark';
+        
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+      });
+    </script>
 
     {% include analytics.html %}
   </body>

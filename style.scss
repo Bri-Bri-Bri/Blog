@@ -9,71 +9,99 @@
 @import "variables";
 // Syntax highlighting @import is at the bottom of this file
 
+// CSS Custom Properties for theming
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --text-secondary: #666666;
+  --accent-color: #3498db;
+  --accent-hover: #2980b9;
+  --border-color: #e1e8ed;
+  --card-bg: #ffffff;
+  --shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --text-secondary: #b3b3b3;
+  --accent-color: #64b5f6;
+  --accent-hover: #42a5f5;
+  --border-color: #333333;
+  --card-bg: #2d2d2d;
+  --shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
 /**************/
 /* BASE RULES */
 /**************/
 
 html {
   font-size: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
-	background: $white;
-  font: 18px/1.4 $helvetica;
-  color: $darkGray;
+  background: var(--bg-color);
+  font: 18px/1.6 $helvetica;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
   margin: 0 auto;
-  max-width: 740px;
-  padding: 0 10px;
+  max-width: 800px;
+  padding: 0 20px;
   width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $helveticaNeue;
-  color: $darkerGray;
-  font-weight: bold;
-
-  line-height: 1.7;
-  margin: 1em 0 15px;
+  color: var(--text-color);
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 1.5em 0 0.5em;
   padding: 0;
 
   @include mobile {
-    line-height: 1.4;
+    line-height: 1.3;
   }
 }
 
 h1 {
-  font-size: 30px;
+  font-size: 2.2rem;
   a {
     color: inherit;
+    text-decoration: none;
   }
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 1.8rem;
 }
 
 h3 {
-  font-size: 20px;
+  font-size: 1.4rem;
 }
 
 h4 {
-  font-size: 18px;
-  color: $gray;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
 }
 
 p {
-  margin: 15px 0;
+  margin: 1rem 0;
+  line-height: 1.7;
 }
 
 a {
-  color: $blue;
+  color: var(--accent-color);
   text-decoration: none;
-	cursor: pointer;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  
   &:hover, &:active {
-    color: $blue;
+    color: var(--accent-hover);
   }
 }
 
@@ -108,6 +136,7 @@ strong, b {
 
 img {
   max-width: 100%;
+  border-radius: 8px;
 }
 
 // Fixes images in popup boxes from Google Translate
@@ -117,7 +146,8 @@ img {
 
 .date {
   font-style: italic;
-  color: $gray;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 // Specify the color of the selection
@@ -128,6 +158,40 @@ img {
 ::selection {
   color: $black;
   background: $lightGray;
+}
+
+// Theme toggle button
+.theme-toggle {
+  background: none;
+  border: 2px solid var(--border-color);
+  border-radius: 25px;
+  width: 50px;
+  height: 26px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    transition: transform 0.3s ease;
+  }
+  
+  [data-theme="dark"] & {
+    &:before {
+      transform: translateX(22px);
+    }
+  }
+  
+  &:hover {
+    border-color: var(--accent-color);
+  }
 }
 
 // Nicolas Gallagher's micro clearfix hack
@@ -151,88 +215,93 @@ img {
 //
 
 .wrapper-masthead {
-  margin-bottom: 50px;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
 }
 
 .masthead {
-  padding: 20px 0;
-  border-bottom: 1px solid $lightGray;
+  padding: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   @include mobile {
+    flex-direction: column;
     text-align: center;
+    gap: 1rem;
   }
 }
 
 .site-avatar {
-  float: left;
-  width: 70px;
-  height: 70px;
-  margin-right: 15px;
+  width: 60px;
+  height: 60px;
+  margin-right: 1rem;
 
   @include mobile {
-    float: none;
-    display: block;
-    margin: 0 auto;
+    margin: 0;
   }
 
   img {
-    border-radius: 5px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-color);
   }
 }
 
 .site-info {
-  float: left;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 
   @include mobile {
-    float: none;
-    display: block;
-    margin: 0 auto;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
 .site-name {
   margin: 0;
-  color: $darkGray;
+  color: var(--text-color);
   cursor: pointer;
   font-family: $helveticaNeue;
-  font-weight: 300;
-  font-size: 28px;
-  letter-spacing: 1px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: -0.5px;
 }
 
 .site-description {
-  margin: -5px 0 0 0;
-  color: $gray;
-  font-size: 16px;
-
-  @include mobile {
-    margin: 3px 0;
-  }
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
 }
 
 nav {
-  float: right;
-  margin-top: 23px; // @TODO: Vertically middle align
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
   font-family: $helveticaNeue;
-  font-size: 18px;
+  font-size: 1rem;
 
   @include mobile {
-    float: none;
-    margin-top: 9px;
-    display: block;
-    font-size: 16px;
+    gap: 1rem;
   }
 
   a {
-    margin-left: 20px;
-    color: $darkGray;
-    text-align: right;
-    font-weight: 300;
-    letter-spacing: 1px;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--accent-color);
+      color: white;
+    }
 
     @include mobile {
-      margin: 0 10px;
-      color: $blue;
+      padding: 0.5rem;
     }
   }
 }
@@ -242,45 +311,79 @@ nav {
 //
 
 .posts > .post {
-  padding-bottom: 2em;
-  border-bottom: 1px solid $lightGray;
-}
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--card-bg);
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-.posts > .post:last-child {
-  padding-bottom: 1em;
-  border-bottom: none;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .post {
   blockquote {
-    margin: 1.8em .8em;
-    border-left: 2px solid $gray;
-    padding: 0.1em 1em;
-    color: $gray;
-    font-size: 22px;
+    margin: 1.5rem 0;
+    border-left: 4px solid var(--accent-color);
+    padding: 1rem 1.5rem;
+    background: var(--card-bg);
+    border-radius: 0 8px 8px 0;
     font-style: italic;
+    position: relative;
+
+    &:before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--accent-color);
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      font-family: serif;
+    }
   }
 
   .comments {
-    margin-top: 10px;
+    margin-top: 2rem;
   }
 
   .read-more {
+    display: inline-block;
+    background: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
     text-transform: uppercase;
-    font-size: 15px;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--accent-hover);
+      color: white;
+    }
   }
 }
 
 .wrapper-footer {
-  margin-top: 50px;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  background-color: $lightGray;
+  margin-top: 3rem;
+  border-top: 1px solid var(--border-color);
+  background: var(--card-bg);
 }
 
 footer {
-  padding: 20px 0;
+  padding: 2rem 0;
   text-align: center;
+  color: var(--text-secondary);
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
