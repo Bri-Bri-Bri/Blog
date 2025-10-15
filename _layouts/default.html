@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
 
     {% include meta.html %}
@@ -47,24 +49,7 @@
       </div>
     </div>
 
-    <script>
-      // Theme toggle functionality
-      const themeToggle = document.getElementById('theme-toggle');
-      const body = document.body;
-      
-      // Check for saved theme preference or default to light mode
-      const currentTheme = localStorage.getItem('theme') || 'light';
-      body.setAttribute('data-theme', currentTheme);
-      
-      themeToggle.addEventListener('click', () => {
-        const theme = body.getAttribute('data-theme');
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        
-        body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-      });
-    </script>
-
+    <script src="{{ site.baseurl }}/assets/js/main.js"></script>
     {% include analytics.html %}
   </body>
 </html>
